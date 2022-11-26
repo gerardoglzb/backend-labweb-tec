@@ -140,7 +140,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 app.get('/checklogin', (req, res) => {
     const myEmail = req.query.email;
     console.log(myEmail);
-    db = `SELECT *
+    sql = `SELECT *
             FROM users
             WHERE email = ?`;
     db.get(sql, [myEmail], (err, row) => {
