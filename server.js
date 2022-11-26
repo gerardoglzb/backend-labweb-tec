@@ -122,7 +122,7 @@ app.get('/whatsapp', (req, res) => {
     var message = "Hola. Ocupo ayuda."
     if (messages.length > 0) {
         message = messages[messageIdx];
-        messageIdx = (messageIdx + 1) / messages.length;
+        messageIdx = (messageIdx + 1) % messages.length;
     }
     res.send(message);
 })
