@@ -139,18 +139,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 app.get('/checklogin', (req, res) => {
     const myEmail = req.body.email;
-    db = `SELECT *
-            FROM users
-            WHERE email = ?`;
-    db.get(sql, [myEmail], (err, row) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        return row
-        ?
-        res.send(row)
-        : res.send(false);
-    })
+    res.send(myEmail);
 })
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
