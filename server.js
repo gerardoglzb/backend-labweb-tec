@@ -138,24 +138,19 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/checklogin', async (req, res) => {
-    try {
-        const myEmail = req.body.email;
-        const myHash = await bcrypt.hash(req.body.password, 10);
-        db = `SELECT *
-                FROM users
-                WHERE email = ?`;
-        db.get(sql, [myEmail], (err, row) => {
-            if (err) {
-                return console.error(err.message);
-            }
-            return row
-            ?
-            res.send(row)
-            : res.send(false);
-        })
-    } catch {
-        res.send(false)
-    }
+    const myEmail = req.body.email;
+    db = `SELECT *
+            FROM users
+            WHERE email = ?`;
+    db.get(sql, [myEmail], (err, row) => {
+        if (err) {
+            return console.error(err.message);
+        }
+        return row
+        ?
+        res.send(row)
+        : res.send(false);
+    })
 })
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
