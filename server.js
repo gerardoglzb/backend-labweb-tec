@@ -163,9 +163,10 @@ app.get('/checklogin', async (req, res) => {
                   if (res2) {
                     console.log("good");
                     res.send(true);
+                } else {
+                    console.log("bad");
+                    res.send(false);
                 }
-                console.log("bad");
-                res.send(false);
                 });
                 // res.send(bcryptCompare(req.query.password, row.password))
             } else {
