@@ -152,7 +152,9 @@ app.get('/checklogin', async (req, res) => {
         realHashed = row.password
         : realHashed = null;
     })
+    console.log("donezo");
     try {
+        console.log("in the try");
         if (realHashed != null) {
             console.log("hashing");
             const myHashed = await bcrypt.hash(req.query.password, 10)
@@ -165,6 +167,7 @@ app.get('/checklogin', async (req, res) => {
     } catch {
         res.send("err");
     }
+    console.log("bye");
     res.send(false);
 })
 
