@@ -120,9 +120,9 @@ app.get('/', checkAuthenticated, (req, res) => {
 
 app.get('/whatsapp', (req, res) => {
     var message = "Hola. Ocupo ayuda."
-    if (messages.Length > 0) {
+    if (messages.length > 0) {
         message = messages[messageIdx];
-        messageIdx = (messageIdx + 1) / messages.Length;
+        messageIdx = (messageIdx + 1) / messages.length;
     }
     res.send(message);
 })
