@@ -86,17 +86,16 @@ function getUsers() {
 
 getUsers();
 
-const messages = {}
+const messages = [];
 let messageIdx = 0;
 
 function getMessages() {
     sql = `SELECT * FROM MESSAGES`;
     db.all(sql, [], (err, rows) => {
         if (err) return console.error(err.message);
-        var i = 0;
         rows.forEach(row => {
-            console.log(row);
-            messages[i++] = row.text;
+            console.log(row.text);
+            messages.push(row.text);
         })
     })
 }
@@ -120,7 +119,12 @@ app.get('/', checkAuthenticated, (req, res) => {
 })
 
 app.get('/whatsapp', (req, res) => {
-    res.json(messages);
+    var message = "Hola. Ocupo ayuda."
+    if (messages.Length > 0) {
+        message = messages[messageIdx];
+        messageIdx = (messageIdx + 1) / messages.Length;
+    }
+    res.send(message);
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
