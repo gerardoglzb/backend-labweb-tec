@@ -138,6 +138,9 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 function bcryptCompare(attempt, hashed) {
+    console.log("b compare");
+    console.log(attempt);
+    console.log(hashed);
     bcrypt.compare(attempt, hashed, function(err, res) {
       if (err){
         console.log("Error bcrypt");
@@ -153,7 +156,6 @@ app.get('/checklogin', async (req, res) => {
     try {
         const myEmail = req.query.email;
         const myHashed = await bcrypt.hash(req.query.password, 10);
-        console.log(myHashed);
         sql = `SELECT *
                 FROM users
                 WHERE email = ?`;
