@@ -143,15 +143,14 @@ app.get('/checklogin', async (req, res) => {
         const myHash = await bcrypt.hash(req.body.password, 10);
         db = `SELECT *
                 FROM users
-                WHERE email = ?
-                AND password = ?`;
-        db.get(sql, [myEmail, myHash], (err, row) => {
+                WHERE email = ?`;
+        db.get(sql, [myEmail], (err, row) => {
             if (err) {
                 return console.error(err.message);
             }
             return row
             ?
-            res.send(true)
+            res.send(row.password)
             : res.send(false);
         })
     } catch {
