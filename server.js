@@ -151,7 +151,7 @@ app.get('/checklogin', async (req, res) => {
             }
             return row
             ?
-            res.send(row.password == myHashed)
+            res.send(row.password)
             : res.send("Nope");
         })
     } catch {
