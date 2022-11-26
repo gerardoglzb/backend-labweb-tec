@@ -5,7 +5,9 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 var cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
