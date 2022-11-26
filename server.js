@@ -146,8 +146,10 @@ function bcryptCompare(attempt, hashed) {
         console.log("Error bcrypt");
       }
       if (res) {
+        console.log("good");
         return true;
     }
+    console.log("bad");
     return false;
     });
 }
