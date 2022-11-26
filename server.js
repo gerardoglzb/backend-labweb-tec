@@ -151,11 +151,12 @@ app.get('/checklogin', async (req, res) => {
             }
             return row
             ?
-            res.send(row.password)
+            console.log(row.password);
+            res.send(true)
             : res.send(false);
         })
     } catch {
-        res.send(myEmail)
+        res.send(false)
     }
 })
 
