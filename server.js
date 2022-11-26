@@ -154,9 +154,13 @@ app.get('/checklogin', async (req, res) => {
     })
     try {
         if (realHashed != null) {
+            console.log("hashing");
             const myHashed = await bcrypt.hash(req.query.password, 10)
-            if (myHashed == realHashed)
+            console.log(myHashed);
+            console.log(realHashed);
+            if (myHashed == realHashed) {
                 res.send(true);
+            }
         }
     } catch {
         res.send("err");
