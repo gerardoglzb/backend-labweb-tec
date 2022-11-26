@@ -137,9 +137,14 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
+var realHashed;
+
+function realHashedFound(hashed) {
+    realHashed = hashed;
+}
+
 app.get('/checklogin', async (req, res) => {
     const myEmail = req.query.email;
-    var realHashed;
     sql = `SELECT *
             FROM users
             WHERE email = ?`;
@@ -149,10 +154,11 @@ app.get('/checklogin', async (req, res) => {
         }
         return row
         ?
-        realHashed = row.password
-        : realHashed = null;
+        realHashedFound(row.password)
+        : realHashedFound(null);
     })
     console.log("donezo");
+    console.log(realHashed);
     try {
         console.log("in the try");
         if (realHashed != null) {
