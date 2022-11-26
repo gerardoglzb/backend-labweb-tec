@@ -137,44 +137,25 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
-var realHashed;
-
-function realHashedFound(hashed) {
-    realHashed = hashed;
-}
-
 app.get('/checklogin', async (req, res) => {
-    const myEmail = req.query.email;
-    sql = `SELECT *
-            FROM users
-            WHERE email = ?`;
-    db.get(sql, [myEmail], (err, row) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        return row
-        ?
-        realHashedFound(row.password)
-        : realHashedFound(null);
-    })
-    console.log("donezo");
-    console.log(realHashed);
     try {
-        console.log("in the try");
-        if (realHashed != null) {
-            console.log("hashing");
-            const myHashed = await bcrypt.hash(req.query.password, 10)
-            console.log(myHashed);
-            console.log(realHashed);
-            if (myHashed == realHashed) {
-                res.send(true);
+        const myEmail = req.query.email;
+        const myHashed = await bcrypt.hash(req.query.password, 10);
+        sql = `SELECT *
+                FROM users
+                WHERE email = ?`;
+        db.get(sql, [myEmail], (err, row) => {
+            if (err) {
+                return console.error(err.message);
             }
-        }
+            return row
+            ?
+            res.send(row.password == myHashed)
+            : res.send("Nope");
+        })
     } catch {
-        res.send("err");
+        res.send("Error");
     }
-    console.log("bye");
-    res.send(false);
 })
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
