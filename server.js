@@ -156,11 +156,11 @@ app.get('/checklogin', async (req, res) => {
                 console.log("b compare");
                 console.log(req.query.password);
                 console.log(row.password);
-                bcrypt.compare(req.query.password, row.password, function(err, res) {
+                bcrypt.compare(req.query.password, row.password, function(err, res2) {
                   if (err){
                     console.log("Error bcrypt");
                   }
-                  if (res) {
+                  if (res2) {
                     console.log("good");
                     res.send(true);
                 }
