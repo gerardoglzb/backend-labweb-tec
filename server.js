@@ -128,7 +128,6 @@ app.get('/whatsapp', (req, res) => {
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    console.log(users);
     res.render('login.ejs')
 })
 
@@ -136,6 +135,10 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
+}))
+
+app.get('/checklogin', passport.authenticate('local', {
+    res.send("Hello");
 }))
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
