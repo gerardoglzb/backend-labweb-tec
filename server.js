@@ -138,7 +138,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/checklogin', (req, res) => {
-    console.log(req.body);
+    console.log(req.query);
     res.send("working");
 })
 
