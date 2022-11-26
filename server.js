@@ -137,7 +137,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
-app.get('/checklogin', async (req, res) => {
+app.get('/checklogin', (req, res) => {
     const myEmail = req.body.email;
     db = `SELECT *
             FROM users
