@@ -150,11 +150,11 @@ app.get('/checklogin', async (req, res) => {
             }
             return row
             ?
-            res.send(row.password)
+            res.send(row)
             : res.send(false);
         })
     } catch {
-        res.send(myEmail)
+        res.send(false)
     }
 })
 
