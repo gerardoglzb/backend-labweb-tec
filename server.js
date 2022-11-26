@@ -137,9 +137,9 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
-app.get('/checklogin', (req, res) => {
+app.get('/checklogin', async (req, res) => {
     const myEmail = req.query.email;
-    console.log(myEmail);
+    var realHashed;
     sql = `SELECT *
             FROM users
             WHERE email = ?`;
@@ -149,9 +149,19 @@ app.get('/checklogin', (req, res) => {
         }
         return row
         ?
-        res.send(row.password)
-        : res.send(false);
+        realHashed = row.password
+        : realHashed = null;
     })
+    try {
+        if (realHashed != null) {
+            const myHashed = await bcrypt.hash(req.query.password, 10)
+            if (myHashed == realHashed)
+                res.send(true);
+        }
+    } catch {
+        res.send("err");
+    }
+    res.send(false);
 })
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
