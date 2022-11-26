@@ -152,10 +152,10 @@ app.get('/checklogin', async (req, res) => {
             return row
             ?
             res.send(true)
-            : res.send(true);
+            : res.send(false);
         })
     } catch {
-        res.send(false)
+        res.send(myEmail)
     }
 })
 
