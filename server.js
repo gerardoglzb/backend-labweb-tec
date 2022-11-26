@@ -16,6 +16,18 @@ const db = new sqlite3.Database("./sqlite3.db", sqlite3.OPEN_READWRITE, (err) =>
     if (err) return console.error(err.message);
 })
 
+function listUsers() {
+    sql = `SELECT * FROM users`;
+    db.all(sql, [], (err, rows) => {
+        if (err) return console.error(err.message);
+        rows.forEach(row => {
+            console.log(row.id, row.name, row.email, row.type);
+        })
+    })
+}
+
+// listUsers();
+
 function createUser(name, email, password, type) {
     sql = `INSERT INTO users(name, email, password, type) VALUES (?,?,?,?)`;
     db.run(
