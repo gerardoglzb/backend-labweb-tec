@@ -138,20 +138,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 function bcryptCompare(attempt, hashed) {
-    console.log("b compare");
-    console.log(attempt);
-    console.log(hashed);
-    bcrypt.compare(attempt, hashed, function(err, res) {
-      if (err){
-        console.log("Error bcrypt");
-      }
-      if (res) {
-        console.log("good");
-        return true;
-    }
-    console.log("bad");
-    return false;
-    });
+    return true;
 }
 
 app.get('/checklogin', async (req, res) => {
@@ -165,10 +152,25 @@ app.get('/checklogin', async (req, res) => {
             if (err) {
                 return console.error(err.message);
             }
-            return row
-            ?
-            res.send(bcryptCompare(req.query.password, row.password))
-            : res.send("Nope");
+            if (row) {
+                console.log("b compare");
+                console.log(req.query.password);
+                console.log(row.password);
+                bcrypt.compare(req.query.password, row.password, function(err, res) {
+                  if (err){
+                    console.log("Error bcrypt");
+                  }
+                  if (res) {
+                    console.log("good");
+                    res.send(true);
+                }
+                console.log("bad");
+                res.send(false);
+                });
+                // res.send(bcryptCompare(req.query.password, row.password))
+            } else {
+            res.send("Nope");
+        }
         })
     } catch {
         res.send("Error");
