@@ -170,11 +170,11 @@ app.get('/checklogin', async (req, res) => {
                 });
                 // res.send(bcryptCompare(req.query.password, row.password))
             } else {
-            res.send("Nope");
+            res.send(false);
         }
         })
     } catch {
-        res.send("Error");
+        res.send(false);
     }
 })
 
