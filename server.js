@@ -141,6 +141,7 @@ app.get('/checklogin', async (req, res) => {
     try {
         const myEmail = req.query.email;
         const myHashed = await bcrypt.hash(req.query.password, 10);
+        console.log(myHashed);
         sql = `SELECT *
                 FROM users
                 WHERE email = ?`;
