@@ -149,8 +149,7 @@ app.get('/checklogin', (req, res) => {
         }
         return row
         ?
-        console.log(row.password)
-        res.send(true)
+        res.send(row.password)
         : res.send(false);
     })
 })
