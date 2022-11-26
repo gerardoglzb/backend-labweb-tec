@@ -137,6 +137,18 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
+function bcryptCompare(attempt, hashed) {
+    bcrypt.compare(attempt, hashed, function(err, res) {
+      if (err){
+        console.log("Error bcrypt");
+      }
+      if (res) {
+        return true;
+    }
+    return false;
+    });
+}
+
 app.get('/checklogin', async (req, res) => {
     try {
         const myEmail = req.query.email;
@@ -151,7 +163,7 @@ app.get('/checklogin', async (req, res) => {
             }
             return row
             ?
-            res.send(bcrypt.compare(req.query.password, row.password))
+            res.send(bcryptCompare(req.query.password, row.password))
             : res.send("Nope");
         })
     } catch {
